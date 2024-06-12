@@ -91,8 +91,8 @@ private:
 		GvkHelper::create_buffer(physicalDevice, device, sizeInBytes,
 			VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT |
 			VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, &vertexHandle, &vertexData);
-
-		GvkHelper::write_to_buffer(device, vertexData, data, sizeInBytes); // Transfer triangle data to the vertex buffer. (staging would be prefered here)
+		// Transfer triangle data to the vertex buffer. (staging would be preferred here)
+		GvkHelper::write_to_buffer(device, vertexData, data, sizeInBytes); 
 	}
 
 	void CompileShaders()
@@ -179,8 +179,10 @@ private:
 		stage_create_info[1].module = fragmentShader;
 		stage_create_info[1].pName = "main";
 
-		VkPipelineInputAssemblyStateCreateInfo assembly_create_info = CreateVkPipelineInputAssemblyStateCreateInfo();
-		VkVertexInputBindingDescription vertex_binding_description = CreateVkVertexInputBindingDescription();
+		VkPipelineInputAssemblyStateCreateInfo assembly_create_info = 
+			CreateVkPipelineInputAssemblyStateCreateInfo();
+		VkVertexInputBindingDescription vertex_binding_description = 
+			CreateVkVertexInputBindingDescription();
 
 		VkVertexInputAttributeDescription vertex_attribute_descriptions[1];
 		vertex_attribute_descriptions[0].binding = 0;
@@ -188,17 +190,25 @@ private:
 		vertex_attribute_descriptions[0].format = VK_FORMAT_R32G32_SFLOAT;
 		vertex_attribute_descriptions[0].offset = 0;
 
-		VkPipelineVertexInputStateCreateInfo input_vertex_info = CreateVkPipelineVertexInputStateCreateInfo(&vertex_binding_description, 1,  vertex_attribute_descriptions, 1);
+		VkPipelineVertexInputStateCreateInfo input_vertex_info = 
+			CreateVkPipelineVertexInputStateCreateInfo(
+				&vertex_binding_description, 1,  vertex_attribute_descriptions, 1);
 
 		VkViewport viewport = CreateViewportFromWindowDimensions();
 		VkRect2D scissor = CreateScissorFromWindowDimensions();
 
-		VkPipelineViewportStateCreateInfo viewport_create_info = CreateVkPipelineViewportStateCreateInfo(&viewport, 1, &scissor, 1);
-		VkPipelineRasterizationStateCreateInfo rasterization_create_info = CreateVkPipelineRasterizationStateCreateInfo();
-		VkPipelineMultisampleStateCreateInfo multisample_create_info = CreateVkPipelineMultisampleStateCreateInfo();
-		VkPipelineDepthStencilStateCreateInfo depth_stencil_create_info = CreateVkPipelineDepthStencilStateCreateInfo();
-		VkPipelineColorBlendAttachmentState color_blend_attachment_state = CreateVkPipelineColorBlendAttachmentState();
-		VkPipelineColorBlendStateCreateInfo color_blend_create_info = CreateVkPipelineColorBlendStateCreateInfo(&color_blend_attachment_state, 1);
+		VkPipelineViewportStateCreateInfo viewport_create_info = 
+			CreateVkPipelineViewportStateCreateInfo(&viewport, 1, &scissor, 1);
+		VkPipelineRasterizationStateCreateInfo rasterization_create_info = 
+			CreateVkPipelineRasterizationStateCreateInfo();
+		VkPipelineMultisampleStateCreateInfo multisample_create_info = 
+			CreateVkPipelineMultisampleStateCreateInfo();
+		VkPipelineDepthStencilStateCreateInfo depth_stencil_create_info = 
+			CreateVkPipelineDepthStencilStateCreateInfo();
+		VkPipelineColorBlendAttachmentState color_blend_attachment_state = 
+			CreateVkPipelineColorBlendAttachmentState();
+		VkPipelineColorBlendStateCreateInfo color_blend_create_info = 
+			CreateVkPipelineColorBlendStateCreateInfo(&color_blend_attachment_state, 1);
 
 		VkDynamicState dynamic_states[2] = 
 		{
@@ -207,7 +217,8 @@ private:
 			VK_DYNAMIC_STATE_SCISSOR
 		};
 
-		VkPipelineDynamicStateCreateInfo dynamic_create_info = CreateVkPipelineDynamicStateCreateInfo(dynamic_states, 2);
+		VkPipelineDynamicStateCreateInfo dynamic_create_info = 
+			CreateVkPipelineDynamicStateCreateInfo(dynamic_states, 2);
 
 		CreatePipelineLayout();
 
@@ -230,7 +241,8 @@ private:
 		pipeline_create_info.subpass = 0;
 		pipeline_create_info.basePipelineHandle = VK_NULL_HANDLE;
 
-		vkCreateGraphicsPipelines(device, VK_NULL_HANDLE, 1, &pipeline_create_info, nullptr, &pipeline);
+		vkCreateGraphicsPipelines(
+			device, VK_NULL_HANDLE, 1, &pipeline_create_info, nullptr, &pipeline);
 
 		// TODO: Part 3b
 		// TODO: Part 4f
@@ -289,7 +301,8 @@ private:
 		return retval;
 	}
 
-	VkPipelineViewportStateCreateInfo CreateVkPipelineViewportStateCreateInfo(VkViewport* viewports, uint32_t viewportCount, VkRect2D* scissors, uint32_t scissorCount)
+	VkPipelineViewportStateCreateInfo CreateVkPipelineViewportStateCreateInfo(
+		VkViewport* viewports, uint32_t viewportCount, VkRect2D* scissors, uint32_t scissorCount)
 	{
 		VkPipelineViewportStateCreateInfo retval = {};
 		retval.sType = VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO;
@@ -366,7 +379,8 @@ private:
 		return retval;
 	}
 
-	VkPipelineColorBlendStateCreateInfo CreateVkPipelineColorBlendStateCreateInfo(VkPipelineColorBlendAttachmentState* blendAttachmentStates, uint32_t attachmentCount)
+	VkPipelineColorBlendStateCreateInfo CreateVkPipelineColorBlendStateCreateInfo(
+		VkPipelineColorBlendAttachmentState* blendAttachmentStates, uint32_t attachmentCount)
 	{
 		VkPipelineColorBlendStateCreateInfo retval = {};
 
@@ -383,7 +397,8 @@ private:
 		return retval;
 	}
 
-	VkPipelineDynamicStateCreateInfo CreateVkPipelineDynamicStateCreateInfo(VkDynamicState* dynamicStates, uint32_t dynamicStateCount)
+	VkPipelineDynamicStateCreateInfo CreateVkPipelineDynamicStateCreateInfo(
+		VkDynamicState* dynamicStates, uint32_t dynamicStateCount)
 	{
 		VkPipelineDynamicStateCreateInfo retval = {};
 
@@ -465,7 +480,7 @@ private:
 		vkCmdBindVertexBuffers(commandBuffer, 0, 1, &vertexHandle, offsets);
 	}
 
-	//Cleanup callback function (passed to VkSurface, will be called when the pipeline shuts down)
+	// Cleanup callback function (passed to VkSurface, will be called when the pipeline shuts down)
 	void CleanUp()
 	{
 		// wait till everything has completed

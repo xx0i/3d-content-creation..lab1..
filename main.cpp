@@ -1,4 +1,4 @@
-// Simple basecode showing how to create a window and attatch a vulkansurface
+// Simple base code showing how to create a window and attach a Vulkan surface
 #define GATEWARE_ENABLE_CORE // All libraries need this
 #define GATEWARE_ENABLE_SYSTEM // Graphics libs require system level libraries
 #define GATEWARE_ENABLE_GRAPHICS // Enables all Graphics Libraries
