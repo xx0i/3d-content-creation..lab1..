@@ -1,11 +1,2 @@
-CMakeLists.txt.user
-CMakeCache.txt
-CMakeFiles
-CMakeScripts
-Testing
-Makefile
-cmake_install.cmake
-install_manifest.txt
-compile_commands.json
-CTestTestfile.cmake
-_deps
+# Never commit/push the solution folder. In CMake solutions are not portable and meant to be disposable anyway.
+Solution
