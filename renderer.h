@@ -252,7 +252,7 @@ private:
 	{
 		VkPipelineInputAssemblyStateCreateInfo retval = {};
 		retval.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;
-		retval.topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;
+		retval.topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST; // TODO: Part 2a
 		retval.primitiveRestartEnable = false;
 		return retval;
 	}
@@ -319,7 +319,7 @@ private:
 
 		retval.sType = VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO;
 		retval.rasterizerDiscardEnable = VK_FALSE;
-		retval.polygonMode = VK_POLYGON_MODE_FILL; // TODO: Part 2a
+		retval.polygonMode = VK_POLYGON_MODE_FILL;
 		retval.lineWidth = 1.0f;
 		retval.cullMode = VK_CULL_MODE_BACK_BIT;
 		retval.frontFace = VK_FRONT_FACE_CLOCKWISE;
