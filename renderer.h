@@ -66,7 +66,7 @@ private:
 		GetHandlesFromSurface();
 		InitializeVertexBuffer();
 		// TODO: Part 3a
-		InitializeStarBuffer();
+		//InitializeStarBuffer();
 		CompileShaders();
 		InitializeGraphicsPipeline();
 	}
