@@ -101,15 +101,15 @@ private:
 		float star[] =
 		{
 			0.0f, 0.9f,
-			0.4f, 0.4f,
+			0.45f, 0.4f,
 			0.9f, 0.0f,
 			0.3f, -0.4f,
 			0.8f, -0.9f,
 			//0.0f, -0.3f,
-			-0.4f, 0.4f,
+			-0.45f, 0.4f,
 			-0.9f, 0.0f,
-			//0.3f, -0.4f,
-			//0.8f, -0.9f,
+			-0.3f, -0.4f,
+			-0.8f, -0.9f,
 		};
 
 		CreateVertexBuffer(&star[0], sizeof(star));
