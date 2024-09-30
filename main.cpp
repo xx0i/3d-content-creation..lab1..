@@ -25,7 +25,7 @@ int main()
 	if (+win.Create(0, 0, 800, 600, GWindowStyle::WINDOWEDBORDERED))
 	{
 		// TODO: Part 1a
-        VkClearColorValue clr = { {0, 0, 0, 1} };// TODO: Part 1a
+        VkClearColorValue clr = { {0, 0, 0, 0} };// TODO: Part 1a
 		msgs.Create([&](const GW::GEvent& g) {
 			GW::SYSTEM::GWindow::Events q;
 			if (+g.Read(q) && q == GWindow::Events::RESIZE)
