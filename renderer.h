@@ -34,6 +34,7 @@ class Renderer
 	VkDeviceMemory vertexData = nullptr;
 	// TODO: Part 3a
 	VkBuffer starHandle = nullptr;
+	VkDeviceMemory starData = nullptr;
 	VkShaderModule vertexShader = nullptr;
 	VkShaderModule fragmentShader = nullptr;
 	// TODO: Part 4b
@@ -66,7 +67,7 @@ private:
 		GetHandlesFromSurface();
 		InitializeVertexBuffer();
 		// TODO: Part 3a
-		//InitializeStarBuffer();
+		InitializeStarBuffer();
 		CompileShaders();
 		InitializeGraphicsPipeline();
 	}
@@ -94,6 +95,14 @@ private:
 		CreateVertexBuffer(&verts[0], sizeof(verts));
 	}
 
+	void CreateVertexBuffer(const void* data, unsigned int sizeInBytes)
+	{
+		GvkHelper::create_buffer(physicalDevice, device, sizeInBytes,
+			VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT |
+			VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, &vertexHandle, &vertexData);
+		// Transfer triangle data to the vertex buffer. (staging would be preferred here)
+		GvkHelper::write_to_buffer(device, vertexData, data, sizeInBytes); 
+	}
 
 	void InitializeStarBuffer()
 	{
@@ -112,16 +121,16 @@ private:
 			-0.7f, -0.9f,
 		};
 
-		CreateVertexBuffer(&star[0], sizeof(star));
+		CreateStarBuffer(&star[0], sizeof(star));
 	}
 
-	void CreateVertexBuffer(const void* data, unsigned int sizeInBytes)
+	void CreateStarBuffer(const void* data, unsigned int sizeInBytes)
 	{
 		GvkHelper::create_buffer(physicalDevice, device, sizeInBytes,
 			VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT |
-			VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, &vertexHandle, &vertexData);
+			VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, &starHandle, &starData);
 		// Transfer triangle data to the vertex buffer. (staging would be preferred here)
-		GvkHelper::write_to_buffer(device, vertexData, data, sizeInBytes); 
+		GvkHelper::write_to_buffer(device, starData, data, sizeInBytes);
 	}
 
 	void CompileShaders()
