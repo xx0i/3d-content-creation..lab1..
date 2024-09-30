@@ -22,7 +22,7 @@ int main()
 	GWindow win;
 	GEventResponder msgs;
 	GVulkanSurface vulkan;
-	if (+win.Create(0, 0, 800, 200, GWindowStyle::WINDOWEDBORDERED))
+	if (+win.Create(0, 0, 800, 600, GWindowStyle::WINDOWEDBORDERED))  //800 = width | 600 = height
 	{
 		// TODO: Part 1a
         VkClearColorValue clr = { {0, 0, 0, 1} };// TODO: Part 1a
