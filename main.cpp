@@ -31,8 +31,8 @@ int main()
 			if (+g.Read(q) && q == GWindow::Events::RESIZE)
 				clr.float32[2] += 0.1f;// TODO: Part 1a
 				win.SetWindowName("Natalie Lubahn - Lab 1 - Vulkan - Part 1 Complete");
-				
 			});
+
 		win.Register(msgs);
 #ifndef NDEBUG
 		const char* debugLayers[] = {
