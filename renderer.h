@@ -492,7 +492,11 @@ public:
 		SetUpPipeline(commandBuffer);
 		vkCmdDraw(commandBuffer, STAR_NUM, 1, 0, 0); // TODO: Part 2b
 		// TODO: Part 3b
-	
+
+		VkBuffer vertexBuffers[] = { starHandle};
+		VkDeviceSize offsets[] = { 0 };
+		vkCmdBindVertexBuffers(commandBuffer, 0, 1, vertexBuffers, offsets);
+
 		// Draw the star using the second pipeline
 		vkCmdDraw(commandBuffer, 10, 1, 0, 0);
 	}
