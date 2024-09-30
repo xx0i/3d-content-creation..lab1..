@@ -41,6 +41,7 @@ class Renderer
 	// pipeline settings for drawing (also required)
 	VkPipeline pipeline = nullptr;
 	// TODO: Part 3b
+	VkPipeline starPipeLine = nullptr;
 	VkPipelineLayout pipelineLayout = nullptr;
 
 	unsigned int windowWidth, windowHeight;
@@ -283,6 +284,18 @@ private:
 			device, VK_NULL_HANDLE, 1, &pipeline_create_info, nullptr, &pipeline);
 
 		// TODO: Part 3b
+		VkPipelineInputAssemblyStateCreateInfo starInput = {};
+		starInput.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;
+		starInput.topology = VK_PRIMITIVE_TOPOLOGY_LINE_STRIP; // Change to connected lines
+		starInput.primitiveRestartEnable = VK_FALSE;
+
+		VkGraphicsPipelineCreateInfo starPipelineCreateInfo = pipeline_create_info; // Copy the existing pipeline info
+		starPipelineCreateInfo.pInputAssemblyState = &starInput;  // Use the new input assembly state
+		// Reuse the same shaders, viewport, rasterization, etc.
+
+		// Create the second pipeline
+		vkCreateGraphicsPipelines(device, VK_NULL_HANDLE, 1, &starPipelineCreateInfo, nullptr, &starPipeLine);
+
 		// TODO: Part 4f
 	}
 
@@ -479,6 +492,9 @@ public:
 		SetUpPipeline(commandBuffer);
 		vkCmdDraw(commandBuffer, STAR_NUM, 1, 0, 0); // TODO: Part 2b
 		// TODO: Part 3b
+	
+		// Draw the star using the second pipeline
+		vkCmdDraw(commandBuffer, 10, 1, 0, 0);
 	}
 private:
 	VkCommandBuffer GetCurrentCommandBuffer()
@@ -528,6 +544,7 @@ private:
 		vkFreeMemory(device, vertexData, nullptr);
 		// TODO: Part 3a
 		vkDestroyBuffer(device, starHandle, nullptr);
+		vkFreeMemory(device, starData, nullptr);
 		vkDestroyShaderModule(device, vertexShader, nullptr);
 		vkDestroyShaderModule(device, fragmentShader, nullptr);
 		// TODO: Part 4b
