@@ -3,6 +3,7 @@
 #ifdef _WIN32 // must use MT platform DLL libraries on windows
 	#pragma comment(lib, "shaderc_combined.lib") 
 #endif
+#include <random>
 
 void PrintLabeledDebugString(const char* label, const char* toPrint)
 {
@@ -78,11 +79,15 @@ private:
 	void InitializeVertexBuffer()
 	{
 		// TODO: Part 2b
-		float verts[] = {
-			0,   0.5f,
-			0.5f, -0.5f,
-			-0.5f, -0.5f
-		};
+		float verts[] = {0, };
+
+		static std::default_random_engine rd; //obtain a random number from hardware
+		static std::uniform_real_distribution<float> distr(-1.0f, 1.0f); //define the range
+
+		for (int i = 0; i < STAR_NUM*2; i++)
+		{
+			verts[i] = distr(rd);
+		}
 
 		CreateVertexBuffer(&verts[0], sizeof(verts));
 	}
@@ -440,7 +445,7 @@ public:
 		VkCommandBuffer commandBuffer = GetCurrentCommandBuffer();
 
 		SetUpPipeline(commandBuffer);
-		vkCmdDraw(commandBuffer, 1, STAR_NUM, 0, 0); // TODO: Part 2b
+		vkCmdDraw(commandBuffer, STAR_NUM, 1, 0, 0); // TODO: Part 2b
 		// TODO: Part 3b
 	}
 private:
