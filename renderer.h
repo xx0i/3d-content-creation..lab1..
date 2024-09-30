@@ -33,6 +33,7 @@ class Renderer
 	VkBuffer vertexHandle = nullptr;
 	VkDeviceMemory vertexData = nullptr;
 	// TODO: Part 3a
+	VkBuffer starHandle = nullptr;
 	VkShaderModule vertexShader = nullptr;
 	VkShaderModule fragmentShader = nullptr;
 	// TODO: Part 4b
@@ -65,6 +66,7 @@ private:
 		GetHandlesFromSurface();
 		InitializeVertexBuffer();
 		// TODO: Part 3a
+		InitializeStarBuffer();
 		CompileShaders();
 		InitializeGraphicsPipeline();
 	}
@@ -90,6 +92,27 @@ private:
 		}
 
 		CreateVertexBuffer(&verts[0], sizeof(verts));
+	}
+
+
+	void InitializeStarBuffer()
+	{
+		// TODO: Part 3a
+		float star[] =
+		{
+			0.0f, 0.5f,
+			0.2f, 0.1f,
+			0.5f, 0.1f,
+			0.3f, -0.1f,
+			0.4f, -0.5f,
+			0.0f, -0.3f,
+			-0.4f, -0.5,
+			-0.3f, -0.1,
+			-0.5f, 0.1f,
+			-0.2f, 0.1f,
+		};
+
+		CreateVertexBuffer(&star[0], sizeof(star));
 	}
 
 	void CreateVertexBuffer(const void* data, unsigned int sizeInBytes)
@@ -495,6 +518,7 @@ private:
 		vkDestroyBuffer(device, vertexHandle, nullptr);
 		vkFreeMemory(device, vertexData, nullptr);
 		// TODO: Part 3a
+		vkDestroyBuffer(device, starHandle, nullptr);
 		vkDestroyShaderModule(device, vertexShader, nullptr);
 		vkDestroyShaderModule(device, fragmentShader, nullptr);
 		// TODO: Part 4b
