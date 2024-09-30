@@ -29,10 +29,7 @@ int main()
 		msgs.Create([&](const GW::GEvent& g) {
 			GW::SYSTEM::GWindow::Events q;
 			if (+g.Read(q) && q == GWindow::Events::RESIZE)
-				clr.float32[0] += 1.0f;// TODO: Part 1a
-				clr.float32[2] += 1.0f;
-				clr.float32[8] += 1.0f;
-				clr.float32[16] += 1.0f;
+				clr.float32[2] += 1.0f;// TODO: Part 1a
 				win.SetWindowName("Natalie Lubahn - Lab 1 - Vulkan");
 				
 			});
