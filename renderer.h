@@ -14,6 +14,7 @@ void PrintLabeledDebugString(const char* label, const char* toPrint)
 }
 
 // TODO: Part 2b
+#define STAR_NUM 10000
 // TODO: Part 4c (in new shader)
 // TODO: Part 4d (in new shader)
 // TODO: Part 4e (in new shader)
@@ -439,7 +440,7 @@ public:
 		VkCommandBuffer commandBuffer = GetCurrentCommandBuffer();
 
 		SetUpPipeline(commandBuffer);
-		vkCmdDraw(commandBuffer, 3, 1, 0, 0); // TODO: Part 2b
+		vkCmdDraw(commandBuffer, 1, STAR_NUM, 0, 0); // TODO: Part 2b
 		// TODO: Part 3b
 	}
 private:
