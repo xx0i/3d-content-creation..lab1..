@@ -119,7 +119,8 @@ private:
 			-0.7f, -0.9f,
 			-0.45f, -0.3f,
 			-0.9f, 0.0f,
-			//-0.45f, -0.3f,
+			-0.45f, 0.3f,
+			0.0f, 0.9f
 		};
 
 		CreateStarBuffer(&star[0], sizeof(star));
@@ -516,7 +517,7 @@ public:
 	// Bind the star vertex buffer
 		commandBuffer = GetCurrentCommandBuffer();
 		SetUpPipelineStar(commandBuffer);
-		vkCmdDraw(commandBuffer, 10, 1, 0, 0); // TODO: Part 2b
+		vkCmdDraw(commandBuffer, 11, 1, 0, 0); // TODO: Part 2b
 	}
 private:
 	VkCommandBuffer GetCurrentCommandBuffer()
