@@ -131,7 +131,7 @@ private:
 			0.0f, 0.9f
 		};
 
-		vertex star2[11] = {0, };
+		vertex star2[4] = {0, };
 
 		for (int i = 0; i < 11; i++)
 		{
