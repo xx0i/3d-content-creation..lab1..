@@ -16,7 +16,7 @@ struct VERTEX_OUTPUT
 VERTEX_OUTPUT main(VERTEX input)
 {
     VERTEX_OUTPUT output;
-    output.pos = input.pos;
+    output.pos = (input.pos, 0.0f, 1.0f);
     output.colour = input.colour;
     
     //output.PointSize = 2.0f; // uncomment for point size

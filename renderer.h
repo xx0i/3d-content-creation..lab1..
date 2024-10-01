@@ -49,10 +49,20 @@ class Renderer
 	unsigned int windowWidth, windowHeight;
 public:
 	// TODO: Part 4a
-	struct vertex 	//vertex struct
+	struct vec2	//vertex struct
 	{
 		float x, y;
+	};
+	
+	struct vec4	//vertex struct
+	{
 		float r, g, b, a;
+	};
+
+	struct vertex 	//vertex struct
+	{
+		vec2 pos;
+		vec4 rgba;
 	};
 
 	Renderer(GW::SYSTEM::GWindow _win, GW::GRAPHICS::GVulkanSurface _vlk)
@@ -135,13 +145,13 @@ private:
 
 		for (int i = 0; i < 11; i++)
 		{
-			star2[i].x = star[i * 2];
-			star2[i].y = star[i * 2 + 1];
+			star2[i].pos.x = star[i * 2];
+			star2[i].pos.y = star[i * 2 + 1];
 
-			star2[i].r = rand() / static_cast<float>(RAND_MAX);
-			star2[i].g = rand() / static_cast<float>(RAND_MAX);
-			star2[i].b = rand() / static_cast<float>(RAND_MAX);
-			star2[i].a = rand() / static_cast<float>(RAND_MAX);
+			star2[i].rgba.r = rand() / static_cast<float>(RAND_MAX);
+			star2[i].rgba.g = rand() / static_cast<float>(RAND_MAX);
+			star2[i].rgba.b = rand() / static_cast<float>(RAND_MAX);
+			star2[i].rgba.a = rand() / static_cast<float>(RAND_MAX);
 		}
 
 		CreateStarBuffer(&star2[0], sizeof(star2));
@@ -399,12 +409,12 @@ private:
 		attributeDescriptions[0].binding = 0;
 		attributeDescriptions[0].location = 0;
 		attributeDescriptions[0].format = VK_FORMAT_R32G32_SFLOAT;
-		attributeDescriptions[0].offset = offsetof(vertex, x);
+		attributeDescriptions[0].offset = offsetof(vertex, pos);
 
 		attributeDescriptions[1].binding = 0;
 		attributeDescriptions[1].location = 1;
 		attributeDescriptions[1].format = VK_FORMAT_R32G32B32_SFLOAT;
-		attributeDescriptions[1].offset = offsetof(vertex, r);
+		attributeDescriptions[1].offset = offsetof(vertex, rgba);
 
 		VkPipelineVertexInputStateCreateInfo vertexInputInfo = CreateVkPipelineVertexInputStateCreateInfoStar(&bindingDescription, 1, &attributeDescriptions, 2);
 	}
