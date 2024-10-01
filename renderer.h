@@ -664,7 +664,7 @@ private:
 		UpdateWindowDimensions();
 		SetViewport(commandBuffer);
 		SetScissor(commandBuffer);
-		vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, starPipeline); //causing read error in the next line -> never goes into bindstarbuffer TT
+		vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, starPipeline);
 		BindStarBuffer(commandBuffer);
 	}
 
