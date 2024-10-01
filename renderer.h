@@ -356,17 +356,16 @@ private:
 
 		// TODO: Part 3b -> creating a second version with the star information
 		// Create Stage Info for Vertex Shader
-		VkPipelineShaderStageCreateInfo stage_create_info2[2] = {};
-		stage_create_info2[0].sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
-		stage_create_info2[0].stage = VK_SHADER_STAGE_VERTEX_BIT;
-		stage_create_info2[0].module = vertexShaderNew;
-		stage_create_info2[0].pName = "main";
+		stage_create_info[0].sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
+		stage_create_info[0].stage = VK_SHADER_STAGE_VERTEX_BIT;
+		stage_create_info[0].module = vertexShaderNew;
+		stage_create_info[0].pName = "main";
 
 		// Create Stage Info for Fragment Shader
-		stage_create_info2[1].sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
-		stage_create_info2[1].stage = VK_SHADER_STAGE_FRAGMENT_BIT;
-		stage_create_info2[1].module = fragmentShaderNew;
-		stage_create_info2[1].pName = "main";
+		stage_create_info[1].sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
+		stage_create_info[1].stage = VK_SHADER_STAGE_FRAGMENT_BIT;
+		stage_create_info[1].module = fragmentShaderNew;
+		stage_create_info[1].pName = "main";
 		VkPipelineInputAssemblyStateCreateInfo assembly_create_info_star =
 			CreateVkPipelineInputAssemblyStateCreateInfoStar();
 
@@ -374,7 +373,7 @@ private:
 
 		pipeline_create_info_star.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
 		pipeline_create_info_star.stageCount = 2;
-		pipeline_create_info_star.pStages = stage_create_info2;
+		pipeline_create_info_star.pStages = stage_create_info;
 		pipeline_create_info_star.pInputAssemblyState = &assembly_create_info_star;
 		pipeline_create_info_star.pVertexInputState = &input_vertex_info;
 		pipeline_create_info_star.pViewportState = &viewport_create_info;
@@ -390,7 +389,6 @@ private:
 
 		vkCreateGraphicsPipelines(
 			device, VK_NULL_HANDLE, 1, &pipeline_create_info_star, nullptr, &starPipeline);
-
 		// TODO: Part 4f
 		VkVertexInputBindingDescription bindingDescription{};
 		bindingDescription.binding = 0;
