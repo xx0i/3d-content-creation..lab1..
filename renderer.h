@@ -117,10 +117,9 @@ private:
 			0.7f, -0.9f,
 			0.0f, -0.65f,
 			-0.7f, -0.9f,
-			//-0.45f, 0.3f,
+			-0.45f, 0.3f,
 			//-0.9f, 0.0f,
 			//-0.45f, -0.3f,
-			//-0.7f, -0.9f,
 		};
 
 		CreateStarBuffer(&star[0], sizeof(star));
