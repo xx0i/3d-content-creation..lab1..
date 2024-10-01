@@ -160,6 +160,8 @@ private:
 	void CompileShaders()
 	{
 		// TODO: Part 4a
+		shaderc_compiler_t compiler2 = shaderc_compiler_initialize();
+		shaderc_compile_options_t options2 = CreateCompileOptions();
 
 		shaderc_compiler_t compiler = shaderc_compiler_initialize();
 		shaderc_compile_options_t options = CreateCompileOptions();
@@ -168,10 +170,15 @@ private:
 		CompileFragmentShader(compiler, options);
 
 		// TODO: Part 4b
+		CompileVertexShader2(compiler2, options2);
+		CompileFragmentShader2(compiler2, options2);
 
 		// Free runtime shader compiler resources
 		shaderc_compile_options_release(options);
 		shaderc_compiler_release(compiler);
+
+		shaderc_compile_options_release(options2);
+		shaderc_compiler_release(compiler2);
 	}
 
 	shaderc_compile_options_t CreateCompileOptions()
@@ -228,6 +235,52 @@ private:
 		//	(char*)shaderc_result_get_bytes(result), &fragmentShaderNew);
 		shaderc_result_release(result); // done
 	}
+
+	//4b 
+	void CompileVertexShader2(const shaderc_compiler_t& compiler, const shaderc_compile_options_t& options)
+	{
+		std::string vertexShaderSource = ReadFileIntoString("../VertexShader.hlsl");
+
+		shaderc_compilation_result_t result = shaderc_compile_into_spv( // compile
+			compiler, vertexShaderSource.c_str(), vertexShaderSource.length(),
+			shaderc_vertex_shader, "main.vert", "main", options);
+
+		if (shaderc_result_get_compilation_status(result) != shaderc_compilation_status_success) // errors?
+		{
+			PrintLabeledDebugString("Vertex Shader Errors:\n", shaderc_result_get_error_message(result));
+			abort();
+			return;
+		}
+
+		GvkHelper::create_shader_module(device, shaderc_result_get_length(result), // load into Vulkan
+			(char*)shaderc_result_get_bytes(result), &vertexShaderNew);
+		//GvkHelper::create_shader_module(device, shaderc_result_get_length(result), // load into Vulkan
+		//	(char*)shaderc_result_get_bytes(result), &vertexShaderNew);
+		shaderc_result_release(result); // done
+	}
+
+	void CompileFragmentShader2(const shaderc_compiler_t& compiler, const shaderc_compile_options_t& options)
+	{
+		std::string fragmentShaderSource = ReadFileIntoString("../FragmentShader.hlsl");
+
+		shaderc_compilation_result_t result = shaderc_compile_into_spv( // compile
+			compiler, fragmentShaderSource.c_str(), fragmentShaderSource.length(),
+			shaderc_fragment_shader, "main.frag", "main", options);
+
+		if (shaderc_result_get_compilation_status(result) != shaderc_compilation_status_success)// errors?
+		{
+			PrintLabeledDebugString("Fragment Shader Errors:\n", shaderc_result_get_error_message(result));
+			abort();
+			return;
+		}
+
+		GvkHelper::create_shader_module(device, shaderc_result_get_length(result), // load into Vulkan
+			(char*)shaderc_result_get_bytes(result), &fragmentShaderNew);
+		//GvkHelper::create_shader_module(device, shaderc_result_get_length(result), // load into Vulkan
+		//	(char*)shaderc_result_get_bytes(result), &fragmentShaderNew);
+		shaderc_result_release(result); // done
+	}
+
 
 	void InitializeGraphicsPipeline()
 	{
@@ -612,7 +665,7 @@ private:
 		UpdateWindowDimensions();
 		SetViewport(commandBuffer);
 		SetScissor(commandBuffer);
-		vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, starPipeline);
+		vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, starPipeline); //causing read error in the next line -> never goes into bindstarbuffer TT
 		BindStarBuffer(commandBuffer);
 	}
 
