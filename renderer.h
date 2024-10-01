@@ -368,7 +368,24 @@ private:
 		stage_create_info[1].pName = "main";
 		VkPipelineInputAssemblyStateCreateInfo assembly_create_info_star =
 			CreateVkPipelineInputAssemblyStateCreateInfoStar();
+		// TODO: Part 4f
+		VkVertexInputBindingDescription bindingDescription{};
+		bindingDescription.binding = 0;
+		bindingDescription.stride = sizeof(vertex);
+		bindingDescription.inputRate = VK_VERTEX_INPUT_RATE_VERTEX;
 
+		std::array<VkVertexInputAttributeDescription, 2> attributeDescriptions{};
+		attributeDescriptions[0].binding = 0;
+		attributeDescriptions[0].location = 0;
+		attributeDescriptions[0].format = VK_FORMAT_R32G32_SFLOAT;
+		attributeDescriptions[0].offset = 0;
+
+		attributeDescriptions[1].binding = 0;
+		attributeDescriptions[1].location = 1;
+		attributeDescriptions[1].format = VK_FORMAT_R32G32B32_SFLOAT;
+		attributeDescriptions[1].offset = 2;
+
+		VkPipelineVertexInputStateCreateInfo vertexInputInfo = CreateVkPipelineVertexInputStateCreateInfoStar(&bindingDescription, 1, &attributeDescriptions, 2);
 		VkGraphicsPipelineCreateInfo pipeline_create_info_star = {};
 
 		pipeline_create_info_star.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
@@ -389,25 +406,6 @@ private:
 
 		vkCreateGraphicsPipelines(
 			device, VK_NULL_HANDLE, 1, &pipeline_create_info_star, nullptr, &starPipeline);
-
-		// TODO: Part 4f
-		VkVertexInputBindingDescription bindingDescription{};
-		bindingDescription.binding = 0;
-		bindingDescription.stride = sizeof(vertex);
-		bindingDescription.inputRate = VK_VERTEX_INPUT_RATE_VERTEX;
-
-		std::array<VkVertexInputAttributeDescription, 2> attributeDescriptions{};
-		attributeDescriptions[0].binding = 0;
-		attributeDescriptions[0].location = 0;
-		attributeDescriptions[0].format = VK_FORMAT_R32G32_SFLOAT;
-		attributeDescriptions[0].offset = 0;
-
-		attributeDescriptions[1].binding = 0;
-		attributeDescriptions[1].location = 1;
-		attributeDescriptions[1].format = VK_FORMAT_R32G32B32_SFLOAT;
-		attributeDescriptions[1].offset = 2;
-
-		VkPipelineVertexInputStateCreateInfo vertexInputInfo = CreateVkPipelineVertexInputStateCreateInfoStar(&bindingDescription, 1, &attributeDescriptions, 2);
 	}
 
 	VkPipelineInputAssemblyStateCreateInfo CreateVkPipelineInputAssemblyStateCreateInfo()
