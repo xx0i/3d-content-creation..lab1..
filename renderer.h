@@ -234,7 +234,7 @@ private:
 	//4b 
 	void CompileVertexShader2(const shaderc_compiler_t& compiler, const shaderc_compile_options_t& options)
 	{
-		std::string vertexShaderSource = ReadFileIntoString("../VertexShader.hlsl");
+		std::string vertexShaderSource = ReadFileIntoString("../VertexShader2.hlsl");
 
 		shaderc_compilation_result_t result = shaderc_compile_into_spv( // compile
 			compiler, vertexShaderSource.c_str(), vertexShaderSource.length(),
@@ -242,7 +242,7 @@ private:
 
 		if (shaderc_result_get_compilation_status(result) != shaderc_compilation_status_success) // errors?
 		{
-			PrintLabeledDebugString("Vertex Shader Errors:\n", shaderc_result_get_error_message(result));
+			PrintLabeledDebugString("Vertex Shader2 Errors:\n", shaderc_result_get_error_message(result));
 			abort();
 			return;
 		}
@@ -254,7 +254,7 @@ private:
 
 	void CompileFragmentShader2(const shaderc_compiler_t& compiler, const shaderc_compile_options_t& options)
 	{
-		std::string fragmentShaderSource = ReadFileIntoString("../FragmentShader.hlsl");
+		std::string fragmentShaderSource = ReadFileIntoString("../FragmentShader2.hlsl");
 
 		shaderc_compilation_result_t result = shaderc_compile_into_spv( // compile
 			compiler, fragmentShaderSource.c_str(), fragmentShaderSource.length(),
@@ -262,7 +262,7 @@ private:
 
 		if (shaderc_result_get_compilation_status(result) != shaderc_compilation_status_success)// errors?
 		{
-			PrintLabeledDebugString("Fragment Shader Errors:\n", shaderc_result_get_error_message(result));
+			PrintLabeledDebugString("Fragment Shader2 Errors:\n", shaderc_result_get_error_message(result));
 			abort();
 			return;
 		}
