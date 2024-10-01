@@ -116,33 +116,109 @@ private:
 	void InitializeStarBuffer()
 	{
 		// TODO: Part 3a
-		float star[] =
-		{
-			0.0f, 0.9f,
-			0.24f, 0.3f,
-			0.83f, 0.1f,
-			0.4f, -0.25f,
-			0.6f, -0.9f,
-			0.0f, -0.5f,
-			-0.6f, -0.9f,
-			-0.4f, -0.25f,
-			-0.83f, 0.1f,
-			-0.24f, 0.3f,
-			0.0f, 0.9f
-		};
+		//float star[] =
+		//{
+		//	0.0f, 0.9f,
+		//	0.24f, 0.3f,
+		//	0.83f, 0.1f,
+		//	0.4f, -0.25f,
+		//	0.6f, -0.9f,
+		//	0.0f, -0.5f,
+		//	-0.6f, -0.9f,
+		//	-0.4f, -0.25f,
+		//	-0.83f, 0.1f,
+		//	-0.24f, 0.3f,
+		//	0.0f, 0.9f
+		//};
 
 		vertex star2[11]{ 0, };
+		star2[0].x = 0.0f;
+		star2[0].y = 0.9f;
+		star2[0].r = rand() / static_cast<float>(RAND_MAX);
+		star2[0].g = rand() / static_cast<float>(RAND_MAX);
+		star2[0].b = rand() / static_cast<float>(RAND_MAX);
+		star2[0].a = rand() / static_cast<float>(RAND_MAX);
 
-		for (int i = 0; i < 11; i++)
-		{
-			star2[i].x = star[i * 2];
-			star2[i].y = star[i * 2 + 1];
+		star2[1].x = 0.24f;
+		star2[1].y = 0.3f;
+		star2[1].r = rand() / static_cast<float>(RAND_MAX);
+		star2[1].g = rand() / static_cast<float>(RAND_MAX);
+		star2[1].b = rand() / static_cast<float>(RAND_MAX);
+		star2[1].a = rand() / static_cast<float>(RAND_MAX);
 
-			star2[i].r = rand() / static_cast<float>(RAND_MAX);
-			star2[i].g = rand() / static_cast<float>(RAND_MAX);
-			star2[i].b = rand() / static_cast<float>(RAND_MAX);
-			star2[i].a = rand() / static_cast<float>(RAND_MAX);
-		}
+		star2[2].x = 0.83f;
+		star2[2].y = 0.1f;
+		star2[2].r = rand() / static_cast<float>(RAND_MAX);
+		star2[2].g = rand() / static_cast<float>(RAND_MAX);
+		star2[2].b = rand() / static_cast<float>(RAND_MAX);
+		star2[2].a = rand() / static_cast<float>(RAND_MAX);
+		
+		star2[3].x = 0.4f;
+		star2[3].y = -0.25f;
+		star2[3].r = rand() / static_cast<float>(RAND_MAX);
+		star2[3].g = rand() / static_cast<float>(RAND_MAX);
+		star2[3].b = rand() / static_cast<float>(RAND_MAX);
+		star2[3].a = rand() / static_cast<float>(RAND_MAX);
+		
+		star2[4].x = 0.6f;
+		star2[4].y = -0.9f;
+		star2[4].r = rand() / static_cast<float>(RAND_MAX);
+		star2[4].g = rand() / static_cast<float>(RAND_MAX);
+		star2[4].b = rand() / static_cast<float>(RAND_MAX);
+		star2[4].a = rand() / static_cast<float>(RAND_MAX);
+		
+		star2[5].x = 0.0f;
+		star2[5].y = -0.5f;
+		star2[5].r = rand() / static_cast<float>(RAND_MAX);
+		star2[5].g = rand() / static_cast<float>(RAND_MAX);
+		star2[5].b = rand() / static_cast<float>(RAND_MAX);
+		star2[5].a = rand() / static_cast<float>(RAND_MAX);
+		
+		star2[6].x = -0.6f;
+		star2[6].y = -0.9f;
+		star2[6].r = rand() / static_cast<float>(RAND_MAX);
+		star2[6].g = rand() / static_cast<float>(RAND_MAX);
+		star2[6].b = rand() / static_cast<float>(RAND_MAX);
+		star2[6].a = rand() / static_cast<float>(RAND_MAX);
+		
+		star2[7].x = -0.4f;
+		star2[7].y = -0.25f;
+		star2[7].r = rand() / static_cast<float>(RAND_MAX);
+		star2[7].g = rand() / static_cast<float>(RAND_MAX);
+		star2[7].b = rand() / static_cast<float>(RAND_MAX);
+		star2[7].a = rand() / static_cast<float>(RAND_MAX);
+		
+		star2[8].x = -0.83f;
+		star2[8].y = 0.1f;
+		star2[8].r = rand() / static_cast<float>(RAND_MAX);
+		star2[8].g = rand() / static_cast<float>(RAND_MAX);
+		star2[8].b = rand() / static_cast<float>(RAND_MAX);
+		star2[8].a = rand() / static_cast<float>(RAND_MAX);
+		
+		star2[9].x = -0.24f;
+		star2[9].y = 0.3f;
+		star2[9].r = rand() / static_cast<float>(RAND_MAX);
+		star2[9].g = rand() / static_cast<float>(RAND_MAX);
+		star2[9].b = rand() / static_cast<float>(RAND_MAX);
+		star2[9].a = rand() / static_cast<float>(RAND_MAX);
+		
+		star2[10].x = 0.0f;
+		star2[10].y = 0.9f;
+		star2[10].r = rand() / static_cast<float>(RAND_MAX);
+		star2[10].g = rand() / static_cast<float>(RAND_MAX);
+		star2[10].b = rand() / static_cast<float>(RAND_MAX);
+		star2[10].a = rand() / static_cast<float>(RAND_MAX);
+
+		//for (int i = 0; i < 11; i++)
+		//{
+		//	star2[i].x = star[i * 2];
+		//	star2[i].y = star[i * 2 + 1];
+
+		//	star2[i].r = rand() / static_cast<float>(RAND_MAX);
+		//	star2[i].g = rand() / static_cast<float>(RAND_MAX);
+		//	star2[i].b = rand() / static_cast<float>(RAND_MAX);
+		//	star2[i].a = rand() / static_cast<float>(RAND_MAX);
+		//}
 
 		CreateStarBuffer(&star2[0], sizeof(star2));
 	}
