@@ -131,9 +131,9 @@ private:
 			0.0f, 0.9f
 		};
 
-		vertex star2[4] = {0, };
+		vertex star2[11] = {0, };
 
-		for (int i = 0; i < 4; i++)
+		for (int i = 0; i < 11; i++)
 		{
 			star2[i].x = star[i * 2];
 			star2[i].y = star[i * 2 + 1];
