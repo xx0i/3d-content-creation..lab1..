@@ -394,7 +394,7 @@ private:
 		pipeline_create_info_star.stageCount = 2;
 		pipeline_create_info_star.pStages = stage_create_info;
 		pipeline_create_info_star.pInputAssemblyState = &assembly_create_info_star;
-		pipeline_create_info_star.pVertexInputState = &input_vertex_info;
+		pipeline_create_info_star.pVertexInputState = &vertexInputInfo;
 		pipeline_create_info_star.pViewportState = &viewport_create_info;
 		pipeline_create_info_star.pRasterizationState = &rasterization_create_info;
 		pipeline_create_info_star.pMultisampleState = &multisample_create_info;
