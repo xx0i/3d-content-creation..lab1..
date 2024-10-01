@@ -1,7 +1,7 @@
 // minimalistic code to draw a single triangle, this is not part of the API.
 #include "shaderc/shaderc.h" // needed for compiling shaders at runtime
 #ifdef _WIN32 // must use MT platform DLL libraries on windows
-	#pragma comment(lib, "shaderc_combined.lib") 
+#pragma comment(lib, "shaderc_combined.lib") 
 #endif
 #include <random>
 
@@ -49,6 +49,12 @@ class Renderer
 	unsigned int windowWidth, windowHeight;
 public:
 	// TODO: Part 4a
+	struct vertex 	//vertex struct
+	{
+		float x, y;
+		float r, g, b, a;
+	};
+
 	Renderer(GW::SYSTEM::GWindow _win, GW::GRAPHICS::GVulkanSurface _vlk)
 	{
 		win = _win;
@@ -85,12 +91,12 @@ private:
 	void InitializeVertexBuffer()
 	{
 		// TODO: Part 2b
-		float verts[STAR_NUM*2] = {0, };
+		float verts[STAR_NUM * 2] = { 0, };
 
 		static std::default_random_engine rd; //obtain a random number from hardware
 		static std::uniform_real_distribution<float> distr(-1.0f, 1.0f); //define the range
 
-		for (int i = 0; i < STAR_NUM*2; i++)
+		for (int i = 0; i < STAR_NUM * 2; i++)
 		{
 			verts[i] = distr(rd);
 		}
@@ -104,15 +110,8 @@ private:
 			VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT |
 			VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, &vertexHandle, &vertexData);
 		// Transfer triangle data to the vertex buffer. (staging would be preferred here)
-		GvkHelper::write_to_buffer(device, vertexData, data, sizeInBytes); 
+		GvkHelper::write_to_buffer(device, vertexData, data, sizeInBytes);
 	}
-
-	// Define your vertex struct
-	struct vertex
-	{
-		float x, y;
-		float r, g, b, a;
-	};
 
 	void InitializeStarBuffer()
 	{
@@ -132,7 +131,7 @@ private:
 			0.0f, 0.9f
 		};
 
-		vertex star2[11]{ 0, };
+		vertex star2[11] = {0, };
 
 		for (int i = 0; i < 11; i++)
 		{
@@ -209,8 +208,6 @@ private:
 
 		GvkHelper::create_shader_module(device, shaderc_result_get_length(result), // load into Vulkan
 			(char*)shaderc_result_get_bytes(result), &vertexShader);
-		//GvkHelper::create_shader_module(device, shaderc_result_get_length(result), // load into Vulkan
-		//	(char*)shaderc_result_get_bytes(result), &vertexShaderNew);
 		shaderc_result_release(result); // done
 	}
 
@@ -231,53 +228,47 @@ private:
 
 		GvkHelper::create_shader_module(device, shaderc_result_get_length(result), // load into Vulkan
 			(char*)shaderc_result_get_bytes(result), &fragmentShader);
-		//GvkHelper::create_shader_module(device, shaderc_result_get_length(result), // load into Vulkan
-		//	(char*)shaderc_result_get_bytes(result), &fragmentShaderNew);
 		shaderc_result_release(result); // done
 	}
 
 	//4b 
 	void CompileVertexShader2(const shaderc_compiler_t& compiler, const shaderc_compile_options_t& options)
 	{
-		std::string vertexShaderSource = ReadFileIntoString("../VertexShader.hlsl");
+		std::string vertexShaderSource2 = ReadFileIntoString("../VertexShader2.hlsl");
 
 		shaderc_compilation_result_t result = shaderc_compile_into_spv( // compile
-			compiler, vertexShaderSource.c_str(), vertexShaderSource.length(),
+			compiler, vertexShaderSource2.c_str(), vertexShaderSource2.length(),
 			shaderc_vertex_shader, "main.vert", "main", options);
 
 		if (shaderc_result_get_compilation_status(result) != shaderc_compilation_status_success) // errors?
 		{
-			PrintLabeledDebugString("Vertex Shader Errors:\n", shaderc_result_get_error_message(result));
+			PrintLabeledDebugString("Vertex Shader2 Errors:\n", shaderc_result_get_error_message(result));
 			abort();
 			return;
 		}
 
 		GvkHelper::create_shader_module(device, shaderc_result_get_length(result), // load into Vulkan
 			(char*)shaderc_result_get_bytes(result), &vertexShaderNew);
-		//GvkHelper::create_shader_module(device, shaderc_result_get_length(result), // load into Vulkan
-		//	(char*)shaderc_result_get_bytes(result), &vertexShaderNew);
 		shaderc_result_release(result); // done
 	}
 
 	void CompileFragmentShader2(const shaderc_compiler_t& compiler, const shaderc_compile_options_t& options)
 	{
-		std::string fragmentShaderSource = ReadFileIntoString("../FragmentShader.hlsl");
+		std::string fragmentShaderSource2 = ReadFileIntoString("../FragmentShader2.hlsl");
 
 		shaderc_compilation_result_t result = shaderc_compile_into_spv( // compile
-			compiler, fragmentShaderSource.c_str(), fragmentShaderSource.length(),
+			compiler, fragmentShaderSource2.c_str(), fragmentShaderSource2.length(),
 			shaderc_fragment_shader, "main.frag", "main", options);
 
 		if (shaderc_result_get_compilation_status(result) != shaderc_compilation_status_success)// errors?
 		{
-			PrintLabeledDebugString("Fragment Shader Errors:\n", shaderc_result_get_error_message(result));
+			PrintLabeledDebugString("Fragment Shader2 Errors:\n", shaderc_result_get_error_message(result));
 			abort();
 			return;
 		}
 
 		GvkHelper::create_shader_module(device, shaderc_result_get_length(result), // load into Vulkan
 			(char*)shaderc_result_get_bytes(result), &fragmentShaderNew);
-		//GvkHelper::create_shader_module(device, shaderc_result_get_length(result), // load into Vulkan
-		//	(char*)shaderc_result_get_bytes(result), &fragmentShaderNew);
 		shaderc_result_release(result); // done
 	}
 
@@ -298,9 +289,9 @@ private:
 		stage_create_info[1].module = fragmentShader;
 		stage_create_info[1].pName = "main";
 
-		VkPipelineInputAssemblyStateCreateInfo assembly_create_info = 
+		VkPipelineInputAssemblyStateCreateInfo assembly_create_info =
 			CreateVkPipelineInputAssemblyStateCreateInfo();
-		VkVertexInputBindingDescription vertex_binding_description = 
+		VkVertexInputBindingDescription vertex_binding_description =
 			CreateVkVertexInputBindingDescription();
 
 		VkVertexInputAttributeDescription vertex_attribute_descriptions[1];
@@ -309,34 +300,34 @@ private:
 		vertex_attribute_descriptions[0].format = VK_FORMAT_R32G32_SFLOAT;
 		vertex_attribute_descriptions[0].offset = 0;
 
-		VkPipelineVertexInputStateCreateInfo input_vertex_info = 
+		VkPipelineVertexInputStateCreateInfo input_vertex_info =
 			CreateVkPipelineVertexInputStateCreateInfo(
-				&vertex_binding_description, 1,  vertex_attribute_descriptions, 1);
+				&vertex_binding_description, 1, vertex_attribute_descriptions, 1);
 
 		VkViewport viewport = CreateViewportFromWindowDimensions();
 		VkRect2D scissor = CreateScissorFromWindowDimensions();
 
-		VkPipelineViewportStateCreateInfo viewport_create_info = 
+		VkPipelineViewportStateCreateInfo viewport_create_info =
 			CreateVkPipelineViewportStateCreateInfo(&viewport, 1, &scissor, 1);
-		VkPipelineRasterizationStateCreateInfo rasterization_create_info = 
+		VkPipelineRasterizationStateCreateInfo rasterization_create_info =
 			CreateVkPipelineRasterizationStateCreateInfo();
-		VkPipelineMultisampleStateCreateInfo multisample_create_info = 
+		VkPipelineMultisampleStateCreateInfo multisample_create_info =
 			CreateVkPipelineMultisampleStateCreateInfo();
-		VkPipelineDepthStencilStateCreateInfo depth_stencil_create_info = 
+		VkPipelineDepthStencilStateCreateInfo depth_stencil_create_info =
 			CreateVkPipelineDepthStencilStateCreateInfo();
-		VkPipelineColorBlendAttachmentState color_blend_attachment_state = 
+		VkPipelineColorBlendAttachmentState color_blend_attachment_state =
 			CreateVkPipelineColorBlendAttachmentState();
-		VkPipelineColorBlendStateCreateInfo color_blend_create_info = 
+		VkPipelineColorBlendStateCreateInfo color_blend_create_info =
 			CreateVkPipelineColorBlendStateCreateInfo(&color_blend_attachment_state, 1);
 
-		VkDynamicState dynamic_states[2] = 
+		VkDynamicState dynamic_states[2] =
 		{
 			// By setting these we do not need to re-create the pipeline on Resize
-			VK_DYNAMIC_STATE_VIEWPORT, 
+			VK_DYNAMIC_STATE_VIEWPORT,
 			VK_DYNAMIC_STATE_SCISSOR
 		};
 
-		VkPipelineDynamicStateCreateInfo dynamic_create_info = 
+		VkPipelineDynamicStateCreateInfo dynamic_create_info =
 			CreateVkPipelineDynamicStateCreateInfo(dynamic_states, 2);
 
 		CreatePipelineLayout();
@@ -380,24 +371,24 @@ private:
 
 		VkGraphicsPipelineCreateInfo pipeline_create_info_star = {};
 
-		pipeline_create_info.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
-		pipeline_create_info.stageCount = 2;
-		pipeline_create_info.pStages = stage_create_info;
-		pipeline_create_info.pInputAssemblyState = &assembly_create_info_star;
-		pipeline_create_info.pVertexInputState = &input_vertex_info;
-		pipeline_create_info.pViewportState = &viewport_create_info;
-		pipeline_create_info.pRasterizationState = &rasterization_create_info;
-		pipeline_create_info.pMultisampleState = &multisample_create_info;
-		pipeline_create_info.pDepthStencilState = &depth_stencil_create_info;
-		pipeline_create_info.pColorBlendState = &color_blend_create_info;
-		pipeline_create_info.pDynamicState = &dynamic_create_info;
-		pipeline_create_info.layout = pipelineLayout;
-		pipeline_create_info.renderPass = renderPass;
-		pipeline_create_info.subpass = 0;
-		pipeline_create_info.basePipelineHandle = VK_NULL_HANDLE;
+		pipeline_create_info_star.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
+		pipeline_create_info_star.stageCount = 2;
+		pipeline_create_info_star.pStages = stage_create_info;
+		pipeline_create_info_star.pInputAssemblyState = &assembly_create_info_star;
+		pipeline_create_info_star.pVertexInputState = &input_vertex_info;
+		pipeline_create_info_star.pViewportState = &viewport_create_info;
+		pipeline_create_info_star.pRasterizationState = &rasterization_create_info;
+		pipeline_create_info_star.pMultisampleState = &multisample_create_info;
+		pipeline_create_info_star.pDepthStencilState = &depth_stencil_create_info;
+		pipeline_create_info_star.pColorBlendState = &color_blend_create_info;
+		pipeline_create_info_star.pDynamicState = &dynamic_create_info;
+		pipeline_create_info_star.layout = pipelineLayout;
+		pipeline_create_info_star.renderPass = renderPass;
+		pipeline_create_info_star.subpass = 0;
+		pipeline_create_info_star.basePipelineHandle = VK_NULL_HANDLE;
 
 		vkCreateGraphicsPipelines(
-			device, VK_NULL_HANDLE, 1, &pipeline_create_info, nullptr, &starPipeline);
+			device, VK_NULL_HANDLE, 1, &pipeline_create_info_star, nullptr, &starPipeline);
 		// TODO: Part 4f
 		VkVertexInputBindingDescription bindingDescription{};
 		bindingDescription.binding = 0;
@@ -665,7 +656,7 @@ private:
 		UpdateWindowDimensions();
 		SetViewport(commandBuffer);
 		SetScissor(commandBuffer);
-		vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, starPipeline); //causing read error in the next line -> never goes into bindstarbuffer TT
+		vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, starPipeline);
 		BindStarBuffer(commandBuffer);
 	}
 
