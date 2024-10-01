@@ -133,7 +133,7 @@ private:
 
 		vertex star2[4] = {0, };
 
-		for (int i = 0; i < 11; i++)
+		for (int i = 0; i < 4; i++)
 		{
 			star2[i].x = star[i * 2];
 			star2[i].y = star[i * 2 + 1];
