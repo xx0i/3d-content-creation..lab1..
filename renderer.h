@@ -38,6 +38,8 @@ class Renderer
 	VkShaderModule vertexShader = nullptr;
 	VkShaderModule fragmentShader = nullptr;
 	// TODO: Part 4b
+	VkShaderModule vertexShaderNew = nullptr;
+	VkShaderModule fragmentShaderNew = nullptr;
 	// pipeline settings for drawing (also required)
 	VkPipeline pipeline = nullptr;
 	// TODO: Part 3b
@@ -105,6 +107,13 @@ private:
 		GvkHelper::write_to_buffer(device, vertexData, data, sizeInBytes); 
 	}
 
+	// Define your vertex struct
+	struct vertex
+	{
+		float x, y;
+		float r, g, b, a;
+	};
+
 	void InitializeStarBuffer()
 	{
 		// TODO: Part 3a
@@ -123,7 +132,20 @@ private:
 			0.0f, 0.9f
 		};
 
-		CreateStarBuffer(&star[0], sizeof(star));
+		vertex star2[11]{ 0, };
+
+		for (int i = 0; i < 11; i++)
+		{
+			star2[i].x = star[i * 2];
+			star2[i].y = star[i * 2 + 1];
+
+			star2[i].r = rand() / static_cast<float>(RAND_MAX);
+			star2[i].g = rand() / static_cast<float>(RAND_MAX);
+			star2[i].b = rand() / static_cast<float>(RAND_MAX);
+			star2[i].a = rand() / static_cast<float>(RAND_MAX);
+		}
+
+		CreateStarBuffer(&star2[0], sizeof(star2));    //CreateStarBuffer(&star2[0], sizeof(star2));
 	}
 
 	void CreateStarBuffer(const void* data, unsigned int sizeInBytes)
@@ -180,6 +202,8 @@ private:
 
 		GvkHelper::create_shader_module(device, shaderc_result_get_length(result), // load into Vulkan
 			(char*)shaderc_result_get_bytes(result), &vertexShader);
+		//GvkHelper::create_shader_module(device, shaderc_result_get_length(result), // load into Vulkan
+		//	(char*)shaderc_result_get_bytes(result), &vertexShaderNew);
 		shaderc_result_release(result); // done
 	}
 
@@ -200,6 +224,8 @@ private:
 
 		GvkHelper::create_shader_module(device, shaderc_result_get_length(result), // load into Vulkan
 			(char*)shaderc_result_get_bytes(result), &fragmentShader);
+		//GvkHelper::create_shader_module(device, shaderc_result_get_length(result), // load into Vulkan
+		//	(char*)shaderc_result_get_bytes(result), &fragmentShaderNew);
 		shaderc_result_release(result); // done
 	}
 
@@ -285,6 +311,17 @@ private:
 			device, VK_NULL_HANDLE, 1, &pipeline_create_info, nullptr, &pipeline);
 
 		// TODO: Part 3b -> creating a second version with the star information
+		// Create Stage Info for Vertex Shader
+		stage_create_info[0].sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
+		stage_create_info[0].stage = VK_SHADER_STAGE_VERTEX_BIT;
+		stage_create_info[0].module = vertexShaderNew;
+		stage_create_info[0].pName = "main";
+
+		// Create Stage Info for Fragment Shader
+		stage_create_info[1].sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
+		stage_create_info[1].stage = VK_SHADER_STAGE_FRAGMENT_BIT;
+		stage_create_info[1].module = fragmentShaderNew;
+		stage_create_info[1].pName = "main";
 		VkPipelineInputAssemblyStateCreateInfo assembly_create_info_star =
 			CreateVkPipelineInputAssemblyStateCreateInfoStar();
 
@@ -309,6 +346,21 @@ private:
 		vkCreateGraphicsPipelines(
 			device, VK_NULL_HANDLE, 1, &pipeline_create_info, nullptr, &starPipeline);
 		// TODO: Part 4f
+		VkVertexInputBindingDescription bindingDescription{};
+		bindingDescription.binding = 0;
+		bindingDescription.stride = sizeof(vertex);
+		bindingDescription.inputRate = VK_VERTEX_INPUT_RATE_VERTEX;
+
+		std::array<VkVertexInputAttributeDescription, 2> attributeDescriptions{};
+		attributeDescriptions[0].binding = 0;
+		attributeDescriptions[0].location = 0;
+		attributeDescriptions[0].format = VK_FORMAT_R32G32_SFLOAT;
+		attributeDescriptions[0].offset = offsetof(vertex, x);
+
+		attributeDescriptions[1].binding = 0;
+		attributeDescriptions[1].location = 1;
+		attributeDescriptions[1].format = VK_FORMAT_R32G32B32_SFLOAT;
+		attributeDescriptions[1].offset = offsetof(vertex, r);
 	}
 
 	VkPipelineInputAssemblyStateCreateInfo CreateVkPipelineInputAssemblyStateCreateInfo()
@@ -324,6 +376,7 @@ private:
 	VkPipelineInputAssemblyStateCreateInfo CreateVkPipelineInputAssemblyStateCreateInfoStar()
 	{
 		VkPipelineInputAssemblyStateCreateInfo retval = {};
+
 		retval.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;
 		retval.topology = VK_PRIMITIVE_TOPOLOGY_LINE_STRIP; //strip is used to make the lines continuous so that the number of vertices in the array can be reduced
 		retval.primitiveRestartEnable = false;
@@ -583,9 +636,13 @@ private:
 		// TODO: Part 3a
 		vkDestroyBuffer(device, starHandle, nullptr);
 		vkFreeMemory(device, starData, nullptr);
+
 		vkDestroyShaderModule(device, vertexShader, nullptr);
 		vkDestroyShaderModule(device, fragmentShader, nullptr);
 		// TODO: Part 4b
+		vkDestroyShaderModule(device, vertexShaderNew, nullptr);
+		vkDestroyShaderModule(device, fragmentShaderNew, nullptr);
+
 		vkDestroyPipelineLayout(device, pipelineLayout, nullptr);
 		vkDestroyPipeline(device, pipeline, nullptr);
 		vkDestroyPipeline(device, starPipeline, nullptr);
