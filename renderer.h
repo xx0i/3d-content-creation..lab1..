@@ -138,10 +138,10 @@ private:
 			star2[i].x = star[i * 2];
 			star2[i].y = star[i * 2 + 1];
 
-			//star2[i].r = rand() / static_cast<float>(RAND_MAX);
-			//star2[i].g = rand() / static_cast<float>(RAND_MAX);
-			//star2[i].b = rand() / static_cast<float>(RAND_MAX);
-			//star2[i].a = rand() / static_cast<float>(RAND_MAX);
+			star2[i].r = rand() / static_cast<float>(RAND_MAX);
+			star2[i].g = rand() / static_cast<float>(RAND_MAX);
+			star2[i].b = rand() / static_cast<float>(RAND_MAX);
+			star2[i].a = rand() / static_cast<float>(RAND_MAX);
 		}
 
 		CreateStarBuffer(&star2[0], sizeof(star2));
