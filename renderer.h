@@ -395,19 +395,14 @@ private:
 		bindingDescription.stride = sizeof(vertex);
 		bindingDescription.inputRate = VK_VERTEX_INPUT_RATE_VERTEX;
 
-		std::array<VkVertexInputAttributeDescription, 3> attributeDescriptions{};
+		std::array<VkVertexInputAttributeDescription, 2> attributeDescriptions{};
 		attributeDescriptions[0].binding = 0;
 		attributeDescriptions[0].location = 0;
 		attributeDescriptions[0].format = VK_FORMAT_R32G32_SFLOAT;
 		attributeDescriptions[0].offset = offsetof(vertex, x);
 
-		attributeDescriptions[0].binding = 0;
-		attributeDescriptions[0].location = 1;
-		attributeDescriptions[0].format = VK_FORMAT_R32G32_SFLOAT;
-		attributeDescriptions[0].offset = offsetof(vertex, y);
-
 		attributeDescriptions[1].binding = 0;
-		attributeDescriptions[1].location = 2;
+		attributeDescriptions[1].location = 1;
 		attributeDescriptions[1].format = VK_FORMAT_R32G32B32_SFLOAT;
 		attributeDescriptions[1].offset = offsetof(vertex, r);
 
@@ -458,7 +453,7 @@ private:
 
 	VkPipelineVertexInputStateCreateInfo CreateVkPipelineVertexInputStateCreateInfoStar(
 		VkVertexInputBindingDescription* inputBindingDescriptions, uint32_t bindingCount,
-		std::array<VkVertexInputAttributeDescription, 3>* vertexAttributeDescriptions, uint32_t attributeCount)
+		std::array<VkVertexInputAttributeDescription, 2>* vertexAttributeDescriptions, uint32_t attributeCount)
 	{
 		VkPipelineVertexInputStateCreateInfo retval = {};
 		retval.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
