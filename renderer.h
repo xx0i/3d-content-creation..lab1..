@@ -110,7 +110,7 @@ private:
 		// TODO: Part 3a
 		float star[] =
 		{
-			0.0f, 0.9f,
+			0.0f, 0.8f,
 			0.3f, 0.3f,
 			0.88f, 0.1f,
 			0.45f, -0.3f,
@@ -120,7 +120,7 @@ private:
 			-0.45f, -0.3f,
 			-0.88f, 0.1f,
 			-0.3f, 0.3f,
-			0.0f, 0.9f
+			0.0f, 0.8f
 		};
 
 		CreateStarBuffer(&star[0], sizeof(star));
