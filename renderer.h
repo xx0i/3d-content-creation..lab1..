@@ -544,7 +544,7 @@ private:
 		SetViewport(commandBuffer);
 		SetScissor(commandBuffer);
 		vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, starPipeline);
-		BindVertexBuffers(commandBuffer);
+		BindStarBuffer(commandBuffer);
 	}
 
 	void SetViewport(const VkCommandBuffer& commandBuffer)
