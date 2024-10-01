@@ -387,8 +387,8 @@ private:
 		pipeline_create_info.subpass = 0;
 		pipeline_create_info.basePipelineHandle = VK_NULL_HANDLE;
 
-		vkCreateGraphicsPipelines(
-			device, VK_NULL_HANDLE, 1, &pipeline_create_info, nullptr, &starPipeline);
+		//vkCreateGraphicsPipelines(
+		//	device, VK_NULL_HANDLE, 1, &pipeline_create_info, nullptr, &starPipeline);
 		// TODO: Part 4f
 		VkVertexInputBindingDescription bindingDescription{};
 		bindingDescription.binding = 0;
