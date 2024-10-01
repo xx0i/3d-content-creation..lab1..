@@ -1,7 +1,7 @@
 // minimalistic code to draw a single triangle, this is not part of the API.
 #include "shaderc/shaderc.h" // needed for compiling shaders at runtime
 #ifdef _WIN32 // must use MT platform DLL libraries on windows
-	#pragma comment(lib, "shaderc_combined.lib") 
+#pragma comment(lib, "shaderc_combined.lib") 
 #endif
 #include <random>
 
@@ -49,6 +49,12 @@ class Renderer
 	unsigned int windowWidth, windowHeight;
 public:
 	// TODO: Part 4a
+	struct vertex 	//vertex struct
+	{
+		float x, y;
+		float r, g, b, a;
+	};
+
 	Renderer(GW::SYSTEM::GWindow _win, GW::GRAPHICS::GVulkanSurface _vlk)
 	{
 		win = _win;
@@ -85,12 +91,12 @@ private:
 	void InitializeVertexBuffer()
 	{
 		// TODO: Part 2b
-		float verts[STAR_NUM*2] = {0, };
+		float verts[STAR_NUM * 2] = { 0, };
 
 		static std::default_random_engine rd; //obtain a random number from hardware
 		static std::uniform_real_distribution<float> distr(-1.0f, 1.0f); //define the range
 
-		for (int i = 0; i < STAR_NUM*2; i++)
+		for (int i = 0; i < STAR_NUM * 2; i++)
 		{
 			verts[i] = distr(rd);
 		}
@@ -104,15 +110,8 @@ private:
 			VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT |
 			VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, &vertexHandle, &vertexData);
 		// Transfer triangle data to the vertex buffer. (staging would be preferred here)
-		GvkHelper::write_to_buffer(device, vertexData, data, sizeInBytes); 
+		GvkHelper::write_to_buffer(device, vertexData, data, sizeInBytes);
 	}
-
-	// Define your vertex struct
-	struct vertex
-	{
-		float x, y;
-		float r, g, b, a;
-	};
 
 	void InitializeStarBuffer()
 	{
@@ -121,15 +120,15 @@ private:
 		{
 			0.0f, 0.9f,
 			0.24f, 0.3f,
-			//0.83f, 0.1f,
-			//0.4f, -0.25f,
-			//0.6f, -0.9f,
-			//0.0f, -0.5f,
-			//-0.6f, -0.9f,
-			//-0.4f, -0.25f,
-			//-0.83f, 0.1f,
-			//-0.24f, 0.3f,
-			//0.0f, 0.9f
+			0.83f, 0.1f,
+			0.4f, -0.25f,
+			0.6f, -0.9f,
+			0.0f, -0.5f,
+			-0.6f, -0.9f,
+			-0.4f, -0.25f,
+			-0.83f, 0.1f,
+			-0.24f, 0.3f,
+			0.0f, 0.9f
 		};
 
 		vertex star2[11]{ 0, };
@@ -298,9 +297,9 @@ private:
 		stage_create_info[1].module = fragmentShader;
 		stage_create_info[1].pName = "main";
 
-		VkPipelineInputAssemblyStateCreateInfo assembly_create_info = 
+		VkPipelineInputAssemblyStateCreateInfo assembly_create_info =
 			CreateVkPipelineInputAssemblyStateCreateInfo();
-		VkVertexInputBindingDescription vertex_binding_description = 
+		VkVertexInputBindingDescription vertex_binding_description =
 			CreateVkVertexInputBindingDescription();
 
 		VkVertexInputAttributeDescription vertex_attribute_descriptions[1];
@@ -309,34 +308,34 @@ private:
 		vertex_attribute_descriptions[0].format = VK_FORMAT_R32G32_SFLOAT;
 		vertex_attribute_descriptions[0].offset = 0;
 
-		VkPipelineVertexInputStateCreateInfo input_vertex_info = 
+		VkPipelineVertexInputStateCreateInfo input_vertex_info =
 			CreateVkPipelineVertexInputStateCreateInfo(
-				&vertex_binding_description, 1,  vertex_attribute_descriptions, 1);
+				&vertex_binding_description, 1, vertex_attribute_descriptions, 1);
 
 		VkViewport viewport = CreateViewportFromWindowDimensions();
 		VkRect2D scissor = CreateScissorFromWindowDimensions();
 
-		VkPipelineViewportStateCreateInfo viewport_create_info = 
+		VkPipelineViewportStateCreateInfo viewport_create_info =
 			CreateVkPipelineViewportStateCreateInfo(&viewport, 1, &scissor, 1);
-		VkPipelineRasterizationStateCreateInfo rasterization_create_info = 
+		VkPipelineRasterizationStateCreateInfo rasterization_create_info =
 			CreateVkPipelineRasterizationStateCreateInfo();
-		VkPipelineMultisampleStateCreateInfo multisample_create_info = 
+		VkPipelineMultisampleStateCreateInfo multisample_create_info =
 			CreateVkPipelineMultisampleStateCreateInfo();
-		VkPipelineDepthStencilStateCreateInfo depth_stencil_create_info = 
+		VkPipelineDepthStencilStateCreateInfo depth_stencil_create_info =
 			CreateVkPipelineDepthStencilStateCreateInfo();
-		VkPipelineColorBlendAttachmentState color_blend_attachment_state = 
+		VkPipelineColorBlendAttachmentState color_blend_attachment_state =
 			CreateVkPipelineColorBlendAttachmentState();
-		VkPipelineColorBlendStateCreateInfo color_blend_create_info = 
+		VkPipelineColorBlendStateCreateInfo color_blend_create_info =
 			CreateVkPipelineColorBlendStateCreateInfo(&color_blend_attachment_state, 1);
 
-		VkDynamicState dynamic_states[2] = 
+		VkDynamicState dynamic_states[2] =
 		{
 			// By setting these we do not need to re-create the pipeline on Resize
-			VK_DYNAMIC_STATE_VIEWPORT, 
+			VK_DYNAMIC_STATE_VIEWPORT,
 			VK_DYNAMIC_STATE_SCISSOR
 		};
 
-		VkPipelineDynamicStateCreateInfo dynamic_create_info = 
+		VkPipelineDynamicStateCreateInfo dynamic_create_info =
 			CreateVkPipelineDynamicStateCreateInfo(dynamic_states, 2);
 
 		CreatePipelineLayout();
