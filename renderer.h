@@ -388,7 +388,7 @@ private:
 		pipeline_create_info_star.basePipelineHandle = VK_NULL_HANDLE;
 
 		vkCreateGraphicsPipelines(
-			device, VK_NULL_HANDLE, 1, &pipeline_create_info, nullptr, &starPipeline);
+			device, VK_NULL_HANDLE, 1, &pipeline_create_info_star, nullptr, &starPipeline);
 		// TODO: Part 4f
 		VkVertexInputBindingDescription bindingDescription{};
 		bindingDescription.binding = 0;
