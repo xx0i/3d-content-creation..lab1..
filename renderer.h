@@ -361,6 +361,8 @@ private:
 		attributeDescriptions[1].location = 1;
 		attributeDescriptions[1].format = VK_FORMAT_R32G32B32_SFLOAT;
 		attributeDescriptions[1].offset = offsetof(vertex, r);
+
+		VkPipelineVertexInputStateCreateInfo vertexInputInfo = CreateVkPipelineVertexInputStateCreateInfoStar(&bindingDescription, 1, &attributeDescriptions, 2);
 	}
 
 	VkPipelineInputAssemblyStateCreateInfo CreateVkPipelineInputAssemblyStateCreateInfo()
@@ -402,6 +404,19 @@ private:
 		retval.pVertexBindingDescriptions = inputBindingDescriptions;
 		retval.vertexAttributeDescriptionCount = attributeCount;
 		retval.pVertexAttributeDescriptions = vertexAttributeDescriptions;
+		return retval;
+	}
+
+	VkPipelineVertexInputStateCreateInfo CreateVkPipelineVertexInputStateCreateInfoStar(
+		VkVertexInputBindingDescription* inputBindingDescriptions, uint32_t bindingCount,
+		std::array<VkVertexInputAttributeDescription, 2>* vertexAttributeDescriptions, uint32_t attributeCount)
+	{
+		VkPipelineVertexInputStateCreateInfo retval = {};
+		retval.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
+		retval.vertexBindingDescriptionCount = bindingCount;
+		retval.pVertexBindingDescriptions = inputBindingDescriptions;
+		retval.vertexAttributeDescriptionCount = attributeCount;
+		retval.pVertexAttributeDescriptions = vertexAttributeDescriptions->data();
 		return retval;
 	}
 
