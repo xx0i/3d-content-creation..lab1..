@@ -512,6 +512,8 @@ public:
 		SetUpPipeline(commandBuffer);
 		vkCmdDraw(commandBuffer, STAR_NUM, 1, 0, 0); // TODO: Part 2b
 		// TODO: Part 3b
+
+	// Bind the star vertex buffer
 		commandBuffer = GetCurrentCommandBuffer();
 		SetUpPipelineStar(commandBuffer);
 		vkCmdDraw(commandBuffer, 10, 1, 0, 0); // TODO: Part 2b
@@ -561,6 +563,12 @@ private:
 	{
 		VkDeviceSize offsets[] = { 0 };
 		vkCmdBindVertexBuffers(commandBuffer, 0, 1, &vertexHandle, offsets);
+	}
+
+	void BindStarBuffer(const VkCommandBuffer& commandBuffer)
+	{
+		VkDeviceSize offsets[] = { 0 };
+		vkCmdBindVertexBuffers(commandBuffer, 0, 1, &starHandle, offsets);
 	}
 
 	// Cleanup callback function (passed to VkSurface, will be called when the pipeline shuts down)
