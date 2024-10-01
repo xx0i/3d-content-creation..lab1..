@@ -115,36 +115,36 @@ private:
 
 	void InitializeStarBuffer()
 	{
-		// TODO: Part 3a
-		float star[] =
-		{
-			0.0f, 0.9f,
-			0.24f, 0.3f,
-			0.83f, 0.1f,
-			0.4f, -0.25f,
-			0.6f, -0.9f,
-			0.0f, -0.5f,
-			-0.6f, -0.9f,
-			-0.4f, -0.25f,
-			-0.83f, 0.1f,
-			-0.24f, 0.3f,
-			0.0f, 0.9f
-		};
+		//// TODO: Part 3a
+		//float star[] =
+		//{
+		//	0.0f, 0.9f,
+		//	0.24f, 0.3f,
+		//	0.83f, 0.1f,
+		//	0.4f, -0.25f,
+		//	0.6f, -0.9f,
+		//	0.0f, -0.5f,
+		//	-0.6f, -0.9f,
+		//	-0.4f, -0.25f,
+		//	-0.83f, 0.1f,
+		//	-0.24f, 0.3f,
+		//	0.0f, 0.9f
+		//};
 
-		vertex star2[11] = {0, };
+		//vertex star2[11] = {0, };
 
-		for (int i = 0; i < 11; i++)
-		{
-			star2[i].x = star[i * 2];
-			star2[i].y = star[i * 2 + 1];
+		//for (int i = 0; i < 11; i++)
+		//{
+		//	star2[i].x = star[i * 2];
+		//	star2[i].y = star[i * 2 + 1];
 
-			star2[i].r = rand() / static_cast<float>(RAND_MAX);
-			star2[i].g = rand() / static_cast<float>(RAND_MAX);
-			star2[i].b = rand() / static_cast<float>(RAND_MAX);
-			star2[i].a = rand() / static_cast<float>(RAND_MAX);
-		}
+		//	star2[i].r = rand() / static_cast<float>(RAND_MAX);
+		//	star2[i].g = rand() / static_cast<float>(RAND_MAX);
+		//	star2[i].b = rand() / static_cast<float>(RAND_MAX);
+		//	star2[i].a = rand() / static_cast<float>(RAND_MAX);
+		//}
 
-		CreateStarBuffer(&star2[0], sizeof(star2));
+		//CreateStarBuffer(&star2[0], sizeof(star2));
 	}
 
 	void CreateStarBuffer(const void* data, unsigned int sizeInBytes)
