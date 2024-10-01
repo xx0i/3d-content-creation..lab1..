@@ -145,7 +145,7 @@ private:
 			star2[i].a = rand() / static_cast<float>(RAND_MAX);
 		}
 
-		CreateStarBuffer(&star2[0], sizeof(star2));    //CreateStarBuffer(&star2[0], sizeof(star2));
+		CreateStarBuffer(&star2[0], sizeof(star2));
 	}
 
 	void CreateStarBuffer(const void* data, unsigned int sizeInBytes)
