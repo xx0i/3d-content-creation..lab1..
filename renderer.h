@@ -369,24 +369,6 @@ private:
 		VkPipelineInputAssemblyStateCreateInfo assembly_create_info_star =
 			CreateVkPipelineInputAssemblyStateCreateInfoStar();
 
-		VkGraphicsPipelineCreateInfo pipeline_create_info_star = {};
-
-		pipeline_create_info_star.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
-		pipeline_create_info_star.stageCount = 2;
-		pipeline_create_info_star.pStages = stage_create_info;
-		pipeline_create_info_star.pInputAssemblyState = &assembly_create_info_star;
-		pipeline_create_info_star.pVertexInputState = &input_vertex_info;
-		pipeline_create_info_star.pViewportState = &viewport_create_info;
-		pipeline_create_info_star.pRasterizationState = &rasterization_create_info;
-		pipeline_create_info_star.pMultisampleState = &multisample_create_info;
-		pipeline_create_info_star.pDepthStencilState = &depth_stencil_create_info;
-		pipeline_create_info_star.pColorBlendState = &color_blend_create_info;
-		pipeline_create_info_star.pDynamicState = &dynamic_create_info;
-		pipeline_create_info_star.layout = pipelineLayout;
-		pipeline_create_info_star.renderPass = renderPass;
-		pipeline_create_info_star.subpass = 0;
-		pipeline_create_info_star.basePipelineHandle = VK_NULL_HANDLE;
-		
 		// TODO: Part 4f
 		VkVertexInputBindingDescription bindingDescription{};
 		bindingDescription.binding = 0;
@@ -405,6 +387,24 @@ private:
 		attributeDescriptions[1].offset = offsetof(vertex, r);
 
 		VkPipelineVertexInputStateCreateInfo vertexInputInfo = CreateVkPipelineVertexInputStateCreateInfoStar(&bindingDescription, 1, &attributeDescriptions, 2);
+
+		VkGraphicsPipelineCreateInfo pipeline_create_info_star = {};
+
+		pipeline_create_info_star.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
+		pipeline_create_info_star.stageCount = 2;
+		pipeline_create_info_star.pStages = stage_create_info;
+		pipeline_create_info_star.pInputAssemblyState = &assembly_create_info_star;
+		pipeline_create_info_star.pVertexInputState = &input_vertex_info;
+		pipeline_create_info_star.pViewportState = &viewport_create_info;
+		pipeline_create_info_star.pRasterizationState = &rasterization_create_info;
+		pipeline_create_info_star.pMultisampleState = &multisample_create_info;
+		pipeline_create_info_star.pDepthStencilState = &depth_stencil_create_info;
+		pipeline_create_info_star.pColorBlendState = &color_blend_create_info;
+		pipeline_create_info_star.pDynamicState = &dynamic_create_info;
+		pipeline_create_info_star.layout = pipelineLayout;
+		pipeline_create_info_star.renderPass = renderPass;
+		pipeline_create_info_star.subpass = 0;
+		pipeline_create_info_star.basePipelineHandle = VK_NULL_HANDLE;
 
 		vkCreateGraphicsPipelines(
 			device, VK_NULL_HANDLE, 1, &pipeline_create_info_star, nullptr, &starPipeline);
