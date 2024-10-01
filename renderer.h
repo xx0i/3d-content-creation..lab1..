@@ -284,7 +284,7 @@ private:
 		vkCreateGraphicsPipelines(
 			device, VK_NULL_HANDLE, 1, &pipeline_create_info, nullptr, &pipeline);
 
-		// TODO: Part 3b
+		// TODO: Part 3b -> creating a second version with the star information
 		VkPipelineInputAssemblyStateCreateInfo assembly_create_info_star =
 			CreateVkPipelineInputAssemblyStateCreateInfoStar();
 
@@ -320,11 +320,12 @@ private:
 		return retval;
 	}
 
+	//star pipeline setup
 	VkPipelineInputAssemblyStateCreateInfo CreateVkPipelineInputAssemblyStateCreateInfoStar()
 	{
 		VkPipelineInputAssemblyStateCreateInfo retval = {};
 		retval.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;
-		retval.topology = VK_PRIMITIVE_TOPOLOGY_LINE_STRIP;
+		retval.topology = VK_PRIMITIVE_TOPOLOGY_LINE_LIST;
 		retval.primitiveRestartEnable = false;
 		return retval;
 	}
