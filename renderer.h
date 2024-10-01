@@ -41,7 +41,7 @@ class Renderer
 	// pipeline settings for drawing (also required)
 	VkPipeline pipeline = nullptr;
 	// TODO: Part 3b
-	VkPipeline starPipeLine = nullptr;
+	VkPipeline starPipeline = nullptr;
 	VkPipelineLayout pipelineLayout = nullptr;
 
 	unsigned int windowWidth, windowHeight;
@@ -284,18 +284,29 @@ private:
 			device, VK_NULL_HANDLE, 1, &pipeline_create_info, nullptr, &pipeline);
 
 		// TODO: Part 3b
-		VkPipelineInputAssemblyStateCreateInfo starInput = {};
-		starInput.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;
-		starInput.topology = VK_PRIMITIVE_TOPOLOGY_LINE_STRIP; // Change to connected lines
-		starInput.primitiveRestartEnable = VK_FALSE;
+		VkPipelineInputAssemblyStateCreateInfo assembly_create_info_star =
+			CreateVkPipelineInputAssemblyStateCreateInfoStar();
 
-		VkGraphicsPipelineCreateInfo starPipelineCreateInfo = pipeline_create_info; // Copy the existing pipeline info
-		starPipelineCreateInfo.pInputAssemblyState = &starInput;  // Use the new input assembly state
-		// Reuse the same shaders, viewport, rasterization, etc.
+		VkGraphicsPipelineCreateInfo pipeline_create_info_star = {};
 
-		// Create the second pipeline
-		vkCreateGraphicsPipelines(device, VK_NULL_HANDLE, 1, &starPipelineCreateInfo, nullptr, &starPipeLine);
+		pipeline_create_info.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
+		pipeline_create_info.stageCount = 2;
+		pipeline_create_info.pStages = stage_create_info;
+		pipeline_create_info.pInputAssemblyState = &assembly_create_info_star;
+		pipeline_create_info.pVertexInputState = &input_vertex_info;
+		pipeline_create_info.pViewportState = &viewport_create_info;
+		pipeline_create_info.pRasterizationState = &rasterization_create_info;
+		pipeline_create_info.pMultisampleState = &multisample_create_info;
+		pipeline_create_info.pDepthStencilState = &depth_stencil_create_info;
+		pipeline_create_info.pColorBlendState = &color_blend_create_info;
+		pipeline_create_info.pDynamicState = &dynamic_create_info;
+		pipeline_create_info.layout = pipelineLayout;
+		pipeline_create_info.renderPass = renderPass;
+		pipeline_create_info.subpass = 0;
+		pipeline_create_info.basePipelineHandle = VK_NULL_HANDLE;
 
+		vkCreateGraphicsPipelines(
+			device, VK_NULL_HANDLE, 1, &pipeline_create_info, nullptr, &starPipeline);
 		// TODO: Part 4f
 	}
 
@@ -304,6 +315,15 @@ private:
 		VkPipelineInputAssemblyStateCreateInfo retval = {};
 		retval.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;
 		retval.topology = VK_PRIMITIVE_TOPOLOGY_POINT_LIST; // TODO: Part 2a
+		retval.primitiveRestartEnable = false;
+		return retval;
+	}
+
+	VkPipelineInputAssemblyStateCreateInfo CreateVkPipelineInputAssemblyStateCreateInfoStar()
+	{
+		VkPipelineInputAssemblyStateCreateInfo retval = {};
+		retval.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;
+		retval.topology = VK_PRIMITIVE_TOPOLOGY_LINE_LIST;
 		retval.primitiveRestartEnable = false;
 		return retval;
 	}
@@ -492,13 +512,8 @@ public:
 		SetUpPipeline(commandBuffer);
 		vkCmdDraw(commandBuffer, STAR_NUM, 1, 0, 0); // TODO: Part 2b
 		// TODO: Part 3b
-
-		VkBuffer vertexBuffers[] = { starHandle};
-		VkDeviceSize offsets[] = { 0 };
-		vkCmdBindVertexBuffers(commandBuffer, 0, 1, vertexBuffers, offsets);
-
-		// Draw the star using the second pipeline
-		vkCmdDraw(commandBuffer, 10, 1, 0, 0);
+		SetUpPipelineStar(commandBuffer);
+		vkCmdDraw(commandBuffer, 10, 1, 0, 0); // TODO: Part 2b
 	}
 private:
 	VkCommandBuffer GetCurrentCommandBuffer()
@@ -517,6 +532,15 @@ private:
 		SetViewport(commandBuffer);
 		SetScissor(commandBuffer);
 		vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline);
+		BindVertexBuffers(commandBuffer);
+	}
+
+	void SetUpPipelineStar(const VkCommandBuffer& commandBuffer)
+	{
+		UpdateWindowDimensions();
+		SetViewport(commandBuffer);
+		SetScissor(commandBuffer);
+		vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, starPipeline);
 		BindVertexBuffers(commandBuffer);
 	}
 
@@ -554,5 +578,6 @@ private:
 		// TODO: Part 4b
 		vkDestroyPipelineLayout(device, pipelineLayout, nullptr);
 		vkDestroyPipeline(device, pipeline, nullptr);
+		vkDestroyPipeline(device, starPipeline, nullptr);
 	}
 };
