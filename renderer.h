@@ -91,12 +91,12 @@ private:
 	void InitializeVertexBuffer()
 	{
 		// TODO: Part 2b
-		float verts[STAR_NUM * 2] = { 0, };
+		float verts[STAR_NUM] = { 0, };
 
 		static std::default_random_engine rd; //obtain a random number from hardware
 		static std::uniform_real_distribution<float> distr(-1.0f, 1.0f); //define the range
 
-		for (int i = 0; i < STAR_NUM * 2; i++)
+		for (int i = 0; i < STAR_NUM; i++)
 		{
 			verts[i] = distr(rd);
 		}
