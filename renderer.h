@@ -325,7 +325,7 @@ private:
 	{
 		VkPipelineInputAssemblyStateCreateInfo retval = {};
 		retval.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;
-		retval.topology = VK_PRIMITIVE_TOPOLOGY_LINE_STRIP;
+		retval.topology = VK_PRIMITIVE_TOPOLOGY_LINE_STRIP; //strip is used to make the lines continuous so that the number of vertices in the array can be reduced
 		retval.primitiveRestartEnable = false;
 		return retval;
 	}
@@ -514,11 +514,9 @@ public:
 		SetUpPipeline(commandBuffer);
 		vkCmdDraw(commandBuffer, STAR_NUM, 1, 0, 0); // TODO: Part 2b
 		// TODO: Part 3b
-
-	// Bind the star vertex buffer
-		commandBuffer = GetCurrentCommandBuffer();
+		commandBuffer = GetCurrentCommandBuffer(); //gets the buffers and pipelines set up for the star
 		SetUpPipelineStar(commandBuffer);
-		vkCmdDraw(commandBuffer, 11, 1, 0, 0); // TODO: Part 2b
+		vkCmdDraw(commandBuffer, 11, 1, 0, 0); //draws the actual star
 	}
 private:
 	VkCommandBuffer GetCurrentCommandBuffer()
@@ -540,6 +538,7 @@ private:
 		BindVertexBuffers(commandBuffer);
 	}
 
+	//second pipeline for the star
 	void SetUpPipelineStar(const VkCommandBuffer& commandBuffer)
 	{
 		UpdateWindowDimensions();
