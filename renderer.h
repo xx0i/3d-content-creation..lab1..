@@ -234,10 +234,10 @@ private:
 	//4b 
 	void CompileVertexShader2(const shaderc_compiler_t& compiler, const shaderc_compile_options_t& options)
 	{
-		std::string vertexShaderSource = ReadFileIntoString("../VertexShader2.hlsl");
+		std::string vertexShaderSource2 = ReadFileIntoString("../VertexShader2.hlsl");
 
 		shaderc_compilation_result_t result = shaderc_compile_into_spv( // compile
-			compiler, vertexShaderSource.c_str(), vertexShaderSource.length(),
+			compiler, vertexShaderSource2.c_str(), vertexShaderSource2.length(),
 			shaderc_vertex_shader, "main.vert", "main", options);
 
 		if (shaderc_result_get_compilation_status(result) != shaderc_compilation_status_success) // errors?
@@ -254,10 +254,10 @@ private:
 
 	void CompileFragmentShader2(const shaderc_compiler_t& compiler, const shaderc_compile_options_t& options)
 	{
-		std::string fragmentShaderSource = ReadFileIntoString("../FragmentShader2.hlsl");
+		std::string fragmentShaderSource2 = ReadFileIntoString("../FragmentShader2.hlsl");
 
 		shaderc_compilation_result_t result = shaderc_compile_into_spv( // compile
-			compiler, fragmentShaderSource.c_str(), fragmentShaderSource.length(),
+			compiler, fragmentShaderSource2.c_str(), fragmentShaderSource2.length(),
 			shaderc_fragment_shader, "main.frag", "main", options);
 
 		if (shaderc_result_get_compilation_status(result) != shaderc_compilation_status_success)// errors?
