@@ -112,14 +112,14 @@ private:
 		{
 			0.0f, 0.9f,
 			0.45f, 0.3f,
-			0.9f, 0.0f,
-			0.45f, -0.3f,
-			0.7f, -0.9f,
-			0.0f, -0.65f,
-			-0.45f, 0.3f,
-			-0.9f, 0.0f,
-			-0.45f, -0.3f,
-			-0.7f, -0.9f,
+			//0.9f, 0.0f,
+			//0.45f, -0.3f,
+			//0.7f, -0.9f,
+			//0.0f, -0.65f,
+			//-0.45f, 0.3f,
+			//-0.9f, 0.0f,
+			//-0.45f, -0.3f,
+			//-0.7f, -0.9f,
 		};
 
 		CreateStarBuffer(&star[0], sizeof(star));
@@ -323,7 +323,7 @@ private:
 	{
 		VkPipelineInputAssemblyStateCreateInfo retval = {};
 		retval.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;
-		retval.topology = VK_PRIMITIVE_TOPOLOGY_LINE_STRIP;
+		retval.topology = VK_PRIMITIVE_TOPOLOGY_LINE_LIST;
 		retval.primitiveRestartEnable = false;
 		return retval;
 	}
