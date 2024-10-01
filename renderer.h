@@ -208,8 +208,6 @@ private:
 
 		GvkHelper::create_shader_module(device, shaderc_result_get_length(result), // load into Vulkan
 			(char*)shaderc_result_get_bytes(result), &vertexShader);
-		//GvkHelper::create_shader_module(device, shaderc_result_get_length(result), // load into Vulkan
-		//	(char*)shaderc_result_get_bytes(result), &vertexShaderNew);
 		shaderc_result_release(result); // done
 	}
 
@@ -230,8 +228,6 @@ private:
 
 		GvkHelper::create_shader_module(device, shaderc_result_get_length(result), // load into Vulkan
 			(char*)shaderc_result_get_bytes(result), &fragmentShader);
-		//GvkHelper::create_shader_module(device, shaderc_result_get_length(result), // load into Vulkan
-		//	(char*)shaderc_result_get_bytes(result), &fragmentShaderNew);
 		shaderc_result_release(result); // done
 	}
 
@@ -253,8 +249,6 @@ private:
 
 		GvkHelper::create_shader_module(device, shaderc_result_get_length(result), // load into Vulkan
 			(char*)shaderc_result_get_bytes(result), &vertexShaderNew);
-		//GvkHelper::create_shader_module(device, shaderc_result_get_length(result), // load into Vulkan
-		//	(char*)shaderc_result_get_bytes(result), &vertexShaderNew);
 		shaderc_result_release(result); // done
 	}
 
@@ -275,8 +269,6 @@ private:
 
 		GvkHelper::create_shader_module(device, shaderc_result_get_length(result), // load into Vulkan
 			(char*)shaderc_result_get_bytes(result), &fragmentShaderNew);
-		//GvkHelper::create_shader_module(device, shaderc_result_get_length(result), // load into Vulkan
-		//	(char*)shaderc_result_get_bytes(result), &fragmentShaderNew);
 		shaderc_result_release(result); // done
 	}
 
