@@ -422,7 +422,7 @@ private:
 		VkPipelineInputAssemblyStateCreateInfo retval = {};
 		retval.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;
 		retval.topology = VK_PRIMITIVE_TOPOLOGY_POINT_LIST; // TODO: Part 2a
-		retval.primitiveRestartEnable = false;
+		retval.primitiveRestartEnable = VK_FALSE;
 		return retval;
 	}
 
@@ -433,7 +433,7 @@ private:
 
 		retval.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;
 		retval.topology = VK_PRIMITIVE_TOPOLOGY_LINE_STRIP; //strip is used to make the lines continuous so that the number of vertices in the array can be reduced
-		retval.primitiveRestartEnable = false;
+		retval.primitiveRestartEnable = VK_FALSE;
 		return retval;
 	}
 
