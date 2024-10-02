@@ -386,8 +386,7 @@ private:
 		attributeDescriptions[1].format = VK_FORMAT_R32G32B32A32_SFLOAT;
 		attributeDescriptions[1].offset = sizeof(float) * 2;
 
-		VkPipelineVertexInputStateCreateInfo vertexInputInfo = CreateVkPipelineVertexInputStateCreateInfoStar(&bindingDescription, 1, 
-			attributeDescriptions.data(), sizeof(attributeDescriptions));
+		VkPipelineVertexInputStateCreateInfo vertexInputInfo = CreateVkPipelineVertexInputStateCreateInfoStar(&bindingDescription, 1, attributeDescriptions.data(), 2);
 		
 		VkGraphicsPipelineCreateInfo pipeline_create_info_star = {};
 
