@@ -30,7 +30,6 @@ int main()
 			GW::SYSTEM::GWindow::Events q;
 			if (+g.Read(q) && q == GWindow::Events::RESIZE)
 				clr.float32[2] += 0.1f;// TODO: Part 1a
-				win.SetWindowName("Natalie Lubahn - Lab 1 - Vulkan");
 			});
 
 		win.Register(msgs);
