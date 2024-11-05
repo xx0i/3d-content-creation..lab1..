@@ -1,4 +1,5 @@
-<img src="GatewareLogo.png" width="507">
+*Multiple Starting Files and helper functions were created by Lari Norri at Full Sail University*
+
 
 ## What is Gateware?
 * Gateware is an opensource C++ single header platform abstraction library for graphics, sound, input and more!
